@@ -2,9 +2,13 @@
 *Blood Donation Camp Organizer & Donor Management System* 
 
 **Domain:** HealthTech
+
 **Backend:** Django 5
+
 **Database:** MongoDB
+
 **API:** Django REST Framework (DRF)
+
 **Frontend:** HTML5, CSS3, Bootstrap 5
 
 ## 📌 Project Overview
