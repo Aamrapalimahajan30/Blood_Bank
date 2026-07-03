@@ -98,31 +98,42 @@ Camp-wise Report Generated
 ## 💾 Installation
 
 **Step 1**
-git clone https://github.com/yourusername/bloodbank.git
+git clone https://github.com/Aamrapalimahajan30/Blood_Bank.git
 
 **Step 2**
+
 cd bloodbank
 
 **Step 3**
+
 *Create Virtual Environment*
+
 python -m venv venv
 
 **Step 4**
+
 Activate Environment
 
 *Windows*
+
 venv\Scripts\activate
 
 *Linux/Mac*
+
 source venv/bin/activate
 
 **Step 5**
+
 *Install Packages*
+
 pip install -r requirements.txt
 
 **Step 6**
+
 *Run Django*
+
 python manage.py migrate
+
 python manage.py runserver
 
 ## 🌐 API Endpoints
