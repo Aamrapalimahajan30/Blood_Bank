@@ -1,0 +1,28 @@
+{% extends 'donors/base.html' %}
+{% block title %}Camp Report{% endblock %}
+{% block content %}
+
+<div class="hero-strip">
+  <h2><i class="fa-solid fa-chart-column"></i> Camp-wise Donor Report</h2>
+  <p class="mb-0">Donor counts come from the "Link Donor→Camp" page.</p>
+</div>
+
+<div class="card p-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead><tr><th>Camp</th><th>Venue</th><th>Date</th><th>Location</th><th>Donor Count</th></tr></thead>
+      <tbody>
+      {% for r in report %}
+      <tr>
+        <td>{{ r.camp_name }}</td><td>{{ r.venue }}</td><td>{{ r.camp_date }}</td>
+        <td>{{ r.location }}</td>
+        <td><span class="badge bg-info text-dark fs-6">{{ r.donor_count }}</span></td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-center text-muted py-4">No camps to report.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'donors/base.html' %}
+{% block title %}Camps{% endblock %}
+{% block content %}
+
+<div class="hero-strip">
+  <h2><i class="fa-solid fa-tents"></i> Blood Donation Camps</h2>
+  <p class="mb-0">Browse upcoming camps or organize a new one.</p>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h5 class="mb-3">Create a Camp</h5>
+      {% if user.is_authenticated %}
+        <form method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label class="form-label fw-semibold">{{ field.label }}</label>
+              {{ field }}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-bb w-100"><i class="fa-solid fa-plus"></i> Create Camp</button>
+        </form>
+      {% else %}
+        <p class="text-muted">Only logged-in hospital/organizer accounts can create camps.</p>
+        <a href="{% url 'login' %}" class="btn btn-bb"><i class="fa-solid fa-right-to-bracket"></i> Login as Hospital</a>
+        <a href="{% url 'signup' %}" class="btn btn-outline-danger mt-2"><i class="fa-solid fa-hospital-user"></i> Create Hospital Account</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card p-4">
+      <h5 class="mb-3">All Camps</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead><tr><th>Name</th><th>Venue</th><th>Organizer</th><th>Date</th><th>Location</th><th>Donors</th></tr></thead>
+          <tbody>
+          {% for c in camps %}
+          <tr>
+            <td>{{ c.name }}</td><td>{{ c.venue }}</td><td>{{ c.organizer }}</td>
+            <td>{{ c.camp_date }}</td><td>{{ c.location }}</td>
+            <td><span class="badge bg-info text-dark">{{ c.registered_donors|length }}</span></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="6" class="text-center text-muted py-4">No camps scheduled yet.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <a href="{% url 'camp_register_donor' %}" class="btn btn-outline-danger mt-2">
+        <i class="fa-solid fa-link"></i> Link a donor to a camp
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+document.querySelectorAll('form input, form select').forEach(el => el.classList.add('form-control'));
+</script>
+{% endblock %}

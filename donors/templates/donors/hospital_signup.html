@@ -1,0 +1,33 @@
+{% extends 'donors/base.html' %}
+{% block title %}Hospital Signup{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h4 class="mb-3 text-center"><i class="fa-solid fa-hospital-user"></i> Hospital Account</h4>
+      <p class="text-muted text-center small">Create an account to post blood requests and access the API.</p>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Hospital Name</label>
+          <input type="text" name="hospital_name" class="form-control" placeholder="City General Hospital">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Username</label>
+          <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Password</label>
+          <input type="password" name="password" class="form-control" required minlength="6">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Confirm Password</label>
+          <input type="password" name="confirm_password" class="form-control" required minlength="6">
+        </div>
+        <button type="submit" class="btn btn-bb w-100"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+      </form>
+      <p class="text-center mt-3 mb-0">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

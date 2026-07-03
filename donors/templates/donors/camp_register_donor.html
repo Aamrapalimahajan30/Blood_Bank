@@ -1,0 +1,35 @@
+{% extends 'donors/base.html' %}
+{% block title %}Link Donor to Camp{% endblock %}
+{% block content %}
+
+<div class="hero-strip">
+  <h2><i class="fa-solid fa-link"></i> Register a Donor for a Camp</h2>
+  <p class="mb-0">This is what powers the camp-wise donor count report.</p>
+</div>
+
+<div class="card p-4 col-lg-6">
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Select Donor</label>
+      <select name="donor_id" class="form-select" required>
+        <option value="" disabled selected>Choose a donor…</option>
+        {% for d in donors %}
+          <option value="{{ d.id }}">{{ d.name }} ({{ d.blood_group }}) — {{ d.location }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Select Camp</label>
+      <select name="camp_id" class="form-select" required>
+        <option value="" disabled selected>Choose a camp…</option>
+        {% for c in camps %}
+          <option value="{{ c.id }}">{{ c.name }} — {{ c.camp_date }} ({{ c.location }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-bb"><i class="fa-solid fa-check"></i> Link Donor to Camp</button>
+  </form>
+</div>
+
+{% endblock %}

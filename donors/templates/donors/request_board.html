@@ -1,0 +1,66 @@
+{% extends 'donors/base.html' %}
+{% block title %}Blood Requests{% endblock %}
+{% block content %}
+
+<div class="hero-strip">
+  <h2><i class="fa-solid fa-hospital"></i> Hospital Blood Requests</h2>
+  <p class="mb-0">Post a requirement — we'll match it against available, compatible donors.</p>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h5 class="mb-3">Post a Requirement</h5>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">{{ field.label }}</label>
+            {{ field }}
+          </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-bb w-100"><i class="fa-solid fa-paper-plane"></i> Post Request</button>
+      </form>
+      <p class="text-muted small mt-2 mb-0"><i class="fa-solid fa-lock"></i> Hospital login required to post.</p>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card p-4">
+      <h5 class="mb-3">Open Requests</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead><tr><th>Hospital</th><th>Group</th><th>Location</th><th>Units</th><th>Urgency</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+          {% for r in requests %}
+          <tr>
+            <td>{{ r.hospital }}</td><td><span class="badge badge-blood">{{ r.blood_group }}</span></td>
+            <td>{{ r.location }}</td><td>{{ r.units_needed }}</td>
+            <td>
+              {% if r.urgency == 'critical' %}<span class="badge bg-danger">Critical</span>
+              {% elif r.urgency == 'high' %}<span class="badge bg-warning text-dark">High</span>
+              {% else %}<span class="badge bg-secondary">{{ r.urgency|title }}</span>{% endif %}
+            </td>
+            <td>{% if r.fulfilled %}<span class="badge bg-success">Fulfilled</span>{% else %}<span class="badge bg-light text-dark border">Pending</span>{% endif %}</td>
+            <td>
+              {% if not r.fulfilled %}
+              <a href="{% url 'match_donors' r.id %}" class="btn btn-sm btn-outline-danger">Match &amp; Notify</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="7" class="text-center text-muted py-4">No requests posted yet.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+document.querySelectorAll('form input, form select').forEach(el => el.classList.add('form-control'));
+</script>
+{% endblock %}

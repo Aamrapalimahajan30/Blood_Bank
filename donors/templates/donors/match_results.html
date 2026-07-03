@@ -1,0 +1,44 @@
+{% extends 'donors/base.html' %}
+{% block title %}Match Results{% endblock %}
+{% block content %}
+
+<div class="hero-strip">
+  <h2><i class="fa-solid fa-bullseye"></i> Match Results</h2>
+  <p class="mb-0">{{ request_obj.hospital }} needs <strong>{{ request_obj.blood_group }}</strong> in {{ request_obj.location }}</p>
+</div>
+
+<div class="card p-4 mb-4">
+  <h5 class="mb-3">Matched Donors ({{ matches|length }})</h5>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead><tr><th>Name</th><th>Blood Group</th><th>Phone</th><th>Location</th></tr></thead>
+      <tbody>
+      {% for m in matches %}
+      <tr><td>{{ m.name }}</td><td><span class="badge badge-blood">{{ m.blood_group }}</span></td><td>{{ m.phone }}</td><td>{{ m.location }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card p-4">
+  <h5 class="mb-3">Notifications Sent ({{ notifications|length }})</h5>
+  <ul class="list-group">
+  {% for n in notifications %}
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div>
+        <strong>{{ n.donor }}</strong> ({{ n.email }})<br>
+        <span class="text-muted small">{{ n.message }}</span>
+      </div>
+      {% if n.sent_ok %}
+        <span class="badge bg-success">Sent</span>
+      {% else %}
+        <span class="badge bg-danger" title="{{ n.error }}">Failed</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+
+<a href="{% url 'request_board' %}" class="btn btn-outline-secondary mt-4"><i class="fa-solid fa-arrow-left"></i> Back to Requests</a>
+{% endblock %}
