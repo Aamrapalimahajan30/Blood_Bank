@@ -9,11 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
-    raise RuntimeError(
-        "SECRET_KEY environment variable is not set. "
-        "Generate one with: python -c \"import secrets; print(secrets.token_urlsafe(50))\" "
-        "and put it in your .env file."
-    )
+    raise RuntimeError()
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
